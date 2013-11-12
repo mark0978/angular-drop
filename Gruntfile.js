@@ -49,10 +49,13 @@ module.exports = function(grunt) {
           base: '.',
           keepalive: true,
           middleware: function(connect, options) {
+            var path = require('path');
+            var doc_root = path.resolve(options.base);
             return [
-              util.rewrite(),
-              connect.static(options.base),
-              connect.directory(options.base)
+              //util.rewrite(), // Will cause failures on windows
+              connect.logger('dev'),
+              connect.static(doc_root),
+              connect.directory(doc_root)
             ];
           }
         }
